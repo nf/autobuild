@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	log.SetPrefix("autobuild: ")
 	if _, err := fetch(); err != nil {
 		log.Fatalf("fetch: %v", err)
 	}
@@ -77,6 +78,7 @@ func fetch() (updated bool, err error) {
 		return false, err
 	}
 	if origin == master {
+		log.Printf("origin/master updated to %s", origin)
 		return false, nil
 	}
 	_, err = cmd("git", "reset", "--hard", "origin/master")
