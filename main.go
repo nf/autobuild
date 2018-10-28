@@ -78,9 +78,14 @@ func fetch() (updated bool, err error) {
 		return false, err
 	}
 	if origin == master {
-		log.Printf("origin/master updated to %s", origin)
 		return false, nil
 	}
+	b, err := cmd("git", "log", "-n", "1", "origin/master")
+	if err != nil {
+		return false, err
+	}
+	b = strings.Replace(strings.TrimSpace(b), "\n", "\n\t", -1)
+	log.Printf("origin/master at %s", b)
 	_, err = cmd("git", "reset", "--hard", "origin/master")
 	return true, err
 }
