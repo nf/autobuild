@@ -45,7 +45,7 @@ func run() (kill func(), err error) {
 	if err := cmd.Start(); err != nil {
 		return nil, err
 	}
-	return func() { cmd.Process.Kill() }, nil
+	return func() { cmd.Process.Signal(os.Interrupt) }, nil
 }
 
 func watch(update chan bool) {
